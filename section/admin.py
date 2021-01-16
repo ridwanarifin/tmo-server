@@ -294,6 +294,7 @@ class DestinationGalleryInline(nested_admin.NestedStackedInline):
 class DestinationInline(nested_admin.NestedStackedInline):
   model = Destination
   extra = 0
+  inlines = [DestinationGalleryInline]
   formfield_overrides = {
     models.TextField: {'widget': TinyMCE}
   }

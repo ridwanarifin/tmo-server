@@ -520,7 +520,7 @@ class Destination(models.Model):
 
 # facility
 class FacilityGallery(models.Model):
-  image       = models.ImageField()
+  image     = models.ImageField()
   facility  = models.ForeignKey('section.Facility', related_name='gallery', on_delete=models.SET_NULL, null=True, blank=True)
 
   class Meta:
