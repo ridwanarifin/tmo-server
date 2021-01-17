@@ -32,9 +32,7 @@ class Page(models.Model):
   updated_at          = models.DateTimeField(auto_now=True)
 
   def __str__(self):
-    if self.title is None:
-      return self.name
-    return '%s - %s' % (self.name, self.title)
+    return '%s' % (self.name)
 
   def save(self, *args, **kwargs):
     self.slug = slugify('%s' % (self.name.lower()))

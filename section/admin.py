@@ -18,6 +18,13 @@ class HeroAdmin(nested_admin.NestedModelAdmin):
     models.TextField: {'widget': TinyMCE},
     models.CharField: {'widget': TinyMCE},
   }
+  list_display = [
+    'safe_heading',
+    'image',
+    'mobile_image',
+    'created_at',
+    'updated_at',
+  ]
 # end hero
 
 
@@ -29,6 +36,14 @@ class IntroAdmin(nested_admin.NestedModelAdmin):
     models.TextField: {'widget': TinyMCE},
     models.CharField: {'widget': TinyMCE},
   }
+  list_display = [
+    'safe_heading',
+    'short_description',
+    'image',
+    'youtube_id',
+    'created_at',
+    'updated_at',
+  ]
 # end intro
 
 
@@ -40,6 +55,12 @@ class TheVesselAdmin(nested_admin.NestedModelAdmin):
     models.TextField: {'widget': TinyMCE},
     models.CharField: {'widget': TinyMCE},
   }
+  list_display = [
+    'heading',
+    'short_description',
+    'created_at',
+    'updated_at',
+  ]
 # end vessel
 
 
@@ -49,7 +70,6 @@ class TabsInline(nested_admin.NestedStackedInline):
   extra = 0
   formfield_overrides = {
     models.TextField: {'widget': TinyMCE},
-    models.CharField: {'widget': TinyMCE},
   }
 
 @admin.register(Voyages)
@@ -58,8 +78,13 @@ class VoyagesAdmin(nested_admin.NestedModelAdmin):
   inlines = [TabsInline]
   formfield_overrides = {
     models.TextField: {'widget': TinyMCE},
-    models.CharField: {'widget': TinyMCE},
   }
+  list_display = [
+    'heading',
+    'short_description',
+    'created_at',
+    'updated_at',
+  ]
 # end voyages
 
 
@@ -69,8 +94,15 @@ class DiningAdmin(nested_admin.NestedModelAdmin):
   empty_value_display = '-empty-'
   formfield_overrides = {
     models.TextField: {'widget': TinyMCE},
-    models.CharField: {'widget': TinyMCE},
   }
+  list_display = [
+    'caption',
+    'heading',
+    'short_description',
+    'image',
+    'created_at',
+    'updated_at',
+  ]
 # end dining
 
 
@@ -80,8 +112,15 @@ class OccasionsAdmin(nested_admin.NestedModelAdmin):
   empty_value_display = '-empty-'
   formfield_overrides = {
     models.TextField: {'widget': TinyMCE},
-    models.CharField: {'widget': TinyMCE},
   }
+  list_display = [
+    'caption',
+    'heading',
+    'short_description',
+    'image',
+    'created_at',
+    'updated_at',
+  ]
 # end occasions
 
 
@@ -91,8 +130,14 @@ class DeckTechnicalAdmin(nested_admin.NestedModelAdmin):
   empty_value_display = '-empty-'
   formfield_overrides = {
     models.TextField: {'widget': TinyMCE},
-    models.CharField: {'widget': TinyMCE},
   }
+  list_display = [
+    'heading',
+    'short_description',
+    'image',
+    'created_at',
+    'updated_at',
+  ]
 # end deck technical
 
 
@@ -102,7 +147,6 @@ class DeckPreviewInline(nested_admin.NestedStackedInline):
   extra = 0
   formfield_overrides = {
     models.TextField: {'widget': TinyMCE},
-    models.CharField: {'widget': TinyMCE},
   }
 
 @admin.register(DeckPreview)
@@ -110,8 +154,15 @@ class DeckPreviewAdmin(nested_admin.NestedModelAdmin):
   empty_value_display = '-empty-'
   formfield_overrides = {
     models.TextField: {'widget': TinyMCE},
-    models.CharField: {'widget': TinyMCE},
   }
+  list_display = [
+    'name',
+    'short_description',
+    'image',
+    'mobile_image',
+    'created_at',
+    'updated_at',
+  ]
 # end deck preview
 
 
@@ -131,6 +182,16 @@ class BodySpesificationInline(nested_admin.NestedStackedInline):
 class TableSpesificationAdmin(nested_admin.NestedModelAdmin):
   empty_value_display = '-empty-'
   inlines = [HeaderSpesificationInline, BodySpesificationInline]
+  list_display = [
+    'headers',
+    'body',
+    'created_at',
+    'updated_at',
+  ]
+  def headers(self, obj):
+    return obj.headers.count()
+  def body(self, obj):
+    return obj.data.count()
 # end table spesification
 
 
@@ -143,6 +204,10 @@ class MenuSuitesroomInline(nested_admin.NestedStackedInline):
 class SuitesAndStateroomAdmin(nested_admin.NestedModelAdmin):
   empty_value_display = '-empty-'
   inlines = [MenuSuitesroomInline]
+  list_display = [
+    'caption',
+    'heading',
+  ]
 # end suites and staterooms
 
 
@@ -157,8 +222,20 @@ class AdmiralSuiteAdmin(nested_admin.NestedModelAdmin):
   inlines = [GalleryAdmiralSuiteInline]
   formfield_overrides = {
     models.TextField: {'widget': TinyMCE},
-    models.CharField: {'widget': TinyMCE},
   }
+  list_display = [
+    'icon',
+    'caption',
+    'heading',
+    'sqm',
+    'short_description',
+    'gallery',
+    'created_at',
+    'updated_at',
+  ]
+  list_display_links = ['caption']
+  def gallery(self, obj):
+    return '%s image' % obj.gallery.count()
 # end admiral suites
 
 
@@ -173,8 +250,20 @@ class CommodoreSuiteAdmin(nested_admin.NestedModelAdmin):
   inlines = [GalleryCommodoreSuiteInline]
   formfield_overrides = {
     models.TextField: {'widget': TinyMCE},
-    models.CharField: {'widget': TinyMCE},
   }
+  list_display = [
+    'icon',
+    'caption',
+    'heading',
+    'sqm',
+    'short_description',
+    'gallery',
+    'created_at',
+    'updated_at',
+  ]
+  list_display_links = ['caption']
+  def gallery(self, obj):
+    return '%s image' % obj.gallery.count()
 # end commodore suite
 
 
@@ -193,8 +282,24 @@ class DeluxeStateroomAdmin(nested_admin.NestedModelAdmin):
   inlines = [IconDeluxeStateroomInline, GalleryDeluxeStateroomInline]
   formfield_overrides = {
     models.TextField: {'widget': TinyMCE},
-    models.CharField: {'widget': TinyMCE},
   }
+  list_display = [
+    'icons',
+    'caption',
+    'Heading',
+    'sqm',
+    'short_description',
+    'gallery',
+    'created_at',
+    'updated_at',
+  ]
+  list_display_links = ['caption']
+  def Heading(self, obj):
+    return mark_safe(obj.heading)
+  def icons(self, obj):
+    return '%s icon' % obj.icons.count()
+  def gallery(self, obj):
+    return '%s image' % obj.gallery.count()
 # end deluxe stateroom
 
 
@@ -208,8 +313,15 @@ class TheDecksAdmin(nested_admin.NestedModelAdmin):
   empty_value_display = '-empty-'
   formfield_overrides = {
     models.TextField: {'widget': TinyMCE},
-    models.CharField: {'widget': TinyMCE},
   }
+  list_display = [
+    'caption',
+    'heading',
+    'short_description',
+    'image',
+    'created_at',
+    'updated_at',
+  ]
 # end the decks
 
 
@@ -222,6 +334,15 @@ class PersonilInline(nested_admin.NestedStackedInline):
 class TeamAdmin(nested_admin.NestedModelAdmin):
   empty_value_display = '-empty-'
   inlines = [PersonilInline]
+  list_display = [
+    'caption',
+    'heading',
+    'personil',
+    'created_at',
+    'updated_at',
+  ]
+  def personil(self, obj):
+    return '%s data' % obj.data.count()
 # end team
 
 
@@ -232,6 +353,14 @@ class SustainabilityAdmin(nested_admin.NestedModelAdmin):
   formfield_overrides = {
     models.TextField: {'widget': TinyMCE},
   }
+  list_display = [
+    'caption',
+    'heading',
+    'short_description',
+    'image',
+    'created_at',
+    'updated_at',
+  ]
 # end sustainabiliy
 
 
@@ -249,8 +378,14 @@ class VoyagesItemAdmin(nested_admin.NestedModelAdmin):
   empty_value_display = '-empty-'
   formfield_overrides = {
     models.TextField: {'widget': TinyMCE},
-    models.CharField: {'widget': TinyMCE},
   }
+  list_display = [
+    'Heading',
+    'short_description',
+    'image',
+  ]
+  def Heading(self, obj):
+    return mark_safe('%s' % (obj.heading))
 # end voyages item
 
 
@@ -265,6 +400,10 @@ class TestimonyInline(nested_admin.NestedStackedInline):
 @admin.register(InstagramTestimony)
 class InstagramTestimonyAdmin(nested_admin.NestedModelAdmin):
   empty_value_display = '-empty-'
+  list_display = [
+    'username',
+    'link',
+  ]
 
 @admin.register(Testimony)
 class TestimonyAdmin(nested_admin.NestedModelAdmin):
@@ -272,6 +411,14 @@ class TestimonyAdmin(nested_admin.NestedModelAdmin):
   formfield_overrides = {
     models.TextField: {'widget': TinyMCE},
   }
+  list_display = [
+    'name',
+    'image',
+    'short_comment',
+    'created_at',
+    'updated_at',
+    'instagram',
+  ]
 # end testimony
 
 
@@ -281,8 +428,13 @@ class ItineraryAdmin(nested_admin.NestedModelAdmin):
   empty_value_display = '-empty-'
   formfield_overrides = {
     models.TextField: {'widget': TinyMCE},
-    models.CharField: {'widget': TinyMCE},
   }
+  list_display = [
+    'caption',
+    'heading',
+    'short_description',
+    'image'
+  ]
 # end itinerary
 
 
@@ -306,6 +458,19 @@ class DestinationAdmin(nested_admin.NestedModelAdmin):
   formfield_overrides = {
     models.TextField: {'widget': TinyMCE}
   }
+  list_display = [
+    'Id',
+    'heading',
+    'short_description',
+    'gallery',
+    'page',
+    'created_at',
+    'updated_at',
+  ]
+  def Id(self, obj):
+    return truncatechars(obj.id, 8)
+  def gallery(self, obj):
+    return '%s image' % obj.gallery.count()
 # end destination
 
 
@@ -336,6 +501,18 @@ class FacilityAdmin(nested_admin.NestedModelAdmin):
   formfield_overrides = {
     models.TextField: {'widget': TinyMCE}
   }
+  list_display = [
+    'caption',
+    'heading',
+    'short_description',
+    'reverse',
+    'gallery',
+    'page',
+    'created_at',
+    'updated_at',
+  ]
+  def gallery(self, obj):
+    return '%s image' % obj.gallery.count()
 # end facility
 
 
@@ -364,12 +541,18 @@ class TableFullChapterAdmin(nested_admin.NestedModelAdmin):
     BodyFullChapterInline,
   ]
   list_display = [
+    'headers',
+    'body',
     'ship_capacity',
     'extra_guest',
     'relocation_fee',
     'created_at',
     'updated_at',
   ]
+  def headers(self, obj):
+    return '%s data' % obj.headers.count()
+  def body(self, obj):
+    return '%s data' % obj.data.count()
 # end table full chapter
 
 
@@ -400,9 +583,14 @@ class CharterRatesIncludeAdmin(nested_admin.NestedModelAdmin):
   }
   inlines = [DataCharterIncludeInline]
   list_display = [
-    'name',
+    'Name',
+    'includes',
     'page',
     'created_at',
     'updated_at',
   ]
+  def Name(self, obj):
+    return mark_safe('%s' % (obj.name))
+  def includes(self, obj):
+    return '%s data' % obj.data.count()
 # end charter rates include

@@ -1,4 +1,6 @@
 from django.db import models
+from django.template.defaultfilters import truncatechars
+from django.utils.safestring import mark_safe 
 import uuid
 
 # Create your models here.
@@ -18,6 +20,10 @@ class Hero(models.Model):
 
   def __str__(self):
     return '%s - %s' % (self.id, self.heading)
+
+  @property
+  def safe_heading(self):
+    return mark_safe('%s' % (self.heading))
 
 
 class Video(models.Model):
@@ -47,6 +53,13 @@ class Intro(models.Model):
 
   def __str__(self):
     return self.heading
+
+  @property
+  def safe_heading(self):
+    return mark_safe('%s' % (self.heading))
+
+  def short_description(self):
+    return truncatechars(self.description, 50)
 # end intro
 
 
@@ -66,6 +79,13 @@ class TheVessel(models.Model):
 
   def __str__(self):
     return '%s - %s' % (self.caption, self.heading)
+
+  @property
+  def short_description(self):
+    return truncatechars(
+      mark_safe('%s' % (self.description)),
+      100
+    )
 # end the vessel
 
 
@@ -83,6 +103,10 @@ class Voyages(models.Model):
   def __str__(self):
     return self.heading
 
+  @property
+  def short_description(self):
+    return truncatechars(self.description, 50)
+
 
 class Tabs(models.Model):
   name          = models.CharField(max_length=100)
@@ -95,6 +119,7 @@ class Tabs(models.Model):
   class Meta:
     verbose_name = 'Tab'
     verbose_name_plural = 'Tabs'
+    ordering = ['id']
 
   def __str__(self):
     return '%s - %s' % (self.name, self.heading)
@@ -117,6 +142,10 @@ class Dining(models.Model):
 
   def __str__(self):
     return '%s - %s' % (self.caption, self.heading)
+
+  @property
+  def short_description(self):
+    return truncatechars(self.description, 50)
 # end dining
 
 
@@ -136,6 +165,10 @@ class Occasions(models.Model):
 
   def __str__(self):
     return '%s - %s' % (self.caption, self.heading)
+
+  @property
+  def short_description(self):
+    return truncatechars(self.description, 50)
 # end Occasions
 
 
@@ -153,6 +186,10 @@ class DeckTechnical(models.Model):
 
   def __str__(self):
     return self.heading
+
+  @property
+  def short_description(self):
+    return truncatechars(self.description, 50)
 # end deck technical
 
 
@@ -172,6 +209,13 @@ class DeckPreview(models.Model):
 
   def __str__(self):
     return self.name
+
+  @property
+  def short_description(self):
+    return truncatechars(
+      mark_safe('%s' % (self.description)),
+      100
+    )
 # end deck previews
 
 
@@ -262,6 +306,10 @@ class AdmiralSuite(models.Model):
 
   def __str__(self):
     return '%s - %s' % (self.caption, self.heading)
+
+  @property
+  def short_description(self):
+    return truncatechars(self.description, 50)
 # end admiral suites
 
 
@@ -290,6 +338,10 @@ class CommodoreSuite(models.Model):
 
   def __str__(self):
     return '%s - %s' % (self.caption, self.heading)
+
+  @property
+  def short_description(self):
+    return truncatechars(self.description, 50)
 # end commodore suite
 
 
@@ -326,6 +378,10 @@ class DeluxeStateroom(models.Model):
 
   def __str__(self):
     return '%s - %s' % (self.caption, self.heading)
+
+  @property
+  def short_description(self):
+    return truncatechars(self.description, 50)
 # end deluxe stateroom
 
 
@@ -347,6 +403,10 @@ class TheDecks(models.Model):
 
   def __str__(self):
     return '%s - %s' % (self.id, self.caption)
+
+  @property
+  def short_description(self):
+    return truncatechars(self.description, 50)
 
 
 # teams
@@ -398,6 +458,10 @@ class Sustainability(models.Model):
 
   def __str__(self):
     return '%s - %s' % (self.id, self.caption)
+
+  @property
+  def short_description(self):
+    return truncatechars(self.description, 50)
 # end sustainability
 
 
@@ -429,6 +493,10 @@ class VoyagesItem(models.Model):
 
   def __str__(self):
     return self.heading
+
+  @property
+  def short_description(self):
+    return truncatechars(self.description, 50)
 # end voyages item
 
 
@@ -466,6 +534,10 @@ class Testimony(models.Model):
 
   def __str__(self):
     return self.name
+
+  @property
+  def short_comment(self):
+    return truncatechars(self.comment, 50)
 # end testimony
 
 
@@ -482,7 +554,11 @@ class Itinerary(models.Model):
     verbose_name_plural = 'Itineraries'
 
   def __str__(self):
-    return '%s - %s' % (self.caption, self.heading)
+    return '%s' % (self.heading)
+
+  @property
+  def short_description(self):
+    return truncatechars(self.description, 50)
 # end itinerary
 
 
@@ -515,6 +591,10 @@ class Destination(models.Model):
 
   def __str__(self):
     return '%s' % (self.id)
+
+  @property
+  def short_description(self):
+    return truncatechars(self.description, 50)
 # end destination
 
 
@@ -548,6 +628,10 @@ class Facility(models.Model):
 
   def __str__(self):
     return '%s - %s' % (self.caption, self.heading)
+
+  @property
+  def short_description(self):
+    return truncatechars(self.description, 50)
 # end watersport
 
 
