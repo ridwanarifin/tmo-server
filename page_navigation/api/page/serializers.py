@@ -26,6 +26,7 @@ from section.api.table_full_chapter.serializers import TableFullChapterSerialize
 from section.api.charter_rates_include.serializers import CharterRatesIncludeSerializer
 
 class VoyagesItemSerializer(serializers.ModelSerializer):
+  image = serializers.ImageField(max_length=None, allow_empty_file=False, use_url=False)
   class Meta:
     model = VoyagesItem
     fields = '__all__'

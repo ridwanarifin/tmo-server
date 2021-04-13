@@ -7,6 +7,7 @@ class InstagramTestimonySerializer(serializers.ModelSerializer):
     fields = '__all__'
 
 class TestimonySerializer(serializers.ModelSerializer):
+  image = serializers.ImageField(max_length=None, allow_empty_file=False, use_url=False)
   instagram = InstagramTestimonySerializer(read_only=True)
   class Meta:
     model = Testimony
