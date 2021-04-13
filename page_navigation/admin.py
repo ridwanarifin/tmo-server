@@ -38,12 +38,23 @@ class PageAdmin(nested_admin.NestedModelAdmin):
 
 
 # navigation
-class MenuInline(admin.StackedInline):
+class MenuInline(nested_admin.NestedStackedInline):
   model = Menu
   extra = 0
 
 @admin.register(Navigation)
-class NavigationAdmin(admin.ModelAdmin):
+class NavigationAdmin(nested_admin.NestedModelAdmin):
   empty_value_display = '-empty-'
   inlines = [MenuInline]
+  list_display = [
+    'Title',
+    'to',
+    'children',
+    'created_at',
+    'updated_at',
+  ]
+  def Title(self, obj):
+    return obj.title.title()
+  def children(self, obj):
+    return '%s data' % obj.children.count()
 # end navigation
